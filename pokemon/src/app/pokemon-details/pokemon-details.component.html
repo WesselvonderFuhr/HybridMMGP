@@ -1,1 +1,18 @@
-<p>pokemon-details works!</p>
+<div *ngIf="pokemon">
+
+  <h2>{{pokemon.name | uppercase}}</h2>
+  <div><span>Order: </span>{{pokemon.id}}</div>
+  <img src="{{pokemon.sprite}}"/>
+  <div>
+    <ul>
+      <li>Type: {{pokemon.type}}</li>
+      <li>Height: {{pokemon.height}}</li>
+      <li>Weight: {{pokemon.weight}}</li>
+      <li>HP: {{pokemon.hp}}</li>
+      <li>Attack: {{pokemon.attack}}</li>
+      <li>Defence: {{pokemon.defence}}</li>
+      <li>Speed: {{pokemon.speed}}</li>
+    </ul>
+  </div>
+
+</div>

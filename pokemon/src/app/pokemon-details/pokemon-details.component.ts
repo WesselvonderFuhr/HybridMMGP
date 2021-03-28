@@ -17,11 +17,9 @@ export class PokemonDetailsComponent implements OnInit {
     private dataService: DataService) { }
 
   ngOnInit(): void {
-    // this.dataService.getPokemon('1').subscribe(pokemon => this.pokemon = pokemon);
+    // this.dataService.getPokemon(id).subscribe(pokemon => this.pokemon = pokemon);
     const id = +this.route.snapshot.paramMap.get('id');
-    this.dataService.getPokemon(id).subscribe((response: any) => {
-      console.log(response);
-    });
+    this.dataService.getPokemon(id).subscribe(pokemon => this.pokemon = pokemon);
   }
 
 }

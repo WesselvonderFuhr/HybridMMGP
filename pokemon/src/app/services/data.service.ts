@@ -34,7 +34,7 @@ export class DataService {
       map((item: any) => {
           return new Pokemon(
             item.name,
-            item.order,
+            item.id,
             item.types[0].type.name,
             item.sprites.front_default,
             item.height,
