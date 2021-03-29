@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
+import {PokemonList} from '../../models/pokemon-list';
+import {Pokemon} from '../../models/pokemon';
 
 @Component({
   selector: 'app-pokemon-list-all',
@@ -8,11 +10,20 @@ import { PokemonService } from '../../services/pokemon.service';
 })
 export class PokemonListAllPage implements OnInit {
 
+  pokemons : Pokemon[] = new Array();
   constructor(private pokemonService: PokemonService) { }
 
   ngOnInit() {
     this.pokemonService.getPokemons().subscribe((response: any) => {
-      console.log(response);
+      this.SetPokemons(response);
+     
+    });
+  }
+
+  SetPokemons(pokemonList){
+    console.log(pokemonList);
+    pokemonList.forEach(element => {
+      this.pokemonService.getPokemon(element.id).subscribe(pokemon => this.pokemons.push(pokemon));
     });
   }
 

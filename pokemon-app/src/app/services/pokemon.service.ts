@@ -21,7 +21,7 @@ export class PokemonService {
         return response.results.map(item => {
           return new PokemonList(
             item.name.charAt(0).toUpperCase() + item.name.slice(1),
-            +item.url.replace(this.url, '').replace('/', '')
+            +item.url.replace(this.url, '').replace('/', ''),
           );
         });
       })
