@@ -30,3 +30,15 @@
   margin-left: 10px;
   display: inline-block;
 }
+
+//backicon
+ion-router-link{
+  font-size: 25px;
+  text-decoration: none;
+  color: black;
+}
+.flexHorizontal{
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
