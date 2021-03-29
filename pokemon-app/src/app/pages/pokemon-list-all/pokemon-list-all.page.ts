@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
-import {PokemonList} from '../../models/pokemon-list';
 import {Pokemon} from '../../models/pokemon';
 
 @Component({

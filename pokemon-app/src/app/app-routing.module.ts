@@ -19,6 +19,11 @@ const routes: Routes = [
     path: 'pokemon-list-all',
     loadChildren: () => import('./pages/pokemon-list-all/pokemon-list-all.module').then( m => m.PokemonListAllPageModule)
   },
+  {
+    path: 'pokemon-geo-list',
+    loadChildren: () => import('./pages/pokemon-geo-list/pokemon-geo-list.module').then( m => m.PokemonGeoListPageModule)
+  },
+
 ];
 
 @NgModule({
