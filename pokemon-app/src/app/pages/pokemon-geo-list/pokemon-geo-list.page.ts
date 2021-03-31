@@ -28,7 +28,6 @@ export class PokemonGeoListPage implements OnInit {
   GoTocatchpage(pokemon) {
     //this should be in the camera bit move later
     this.AddObjectToCatchedPokemon(pokemon)
-
     this.route.navigate(['/pokemon-caught-list']);
   }
   //start: this should be in the camera bit move later

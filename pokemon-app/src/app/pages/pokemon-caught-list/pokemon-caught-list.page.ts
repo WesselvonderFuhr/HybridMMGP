@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
 import {PokemonStorage} from '../../models/pokemon-storage';
-import {PokemonList} from '../../models/pokemon-list';
 import { Plugins } from '@capacitor/core';
 
 const { Storage } = Plugins;
@@ -19,6 +18,7 @@ export class PokemonCaughtListPage implements OnInit {
 
    ngOnInit() {
     this.getPokemonFromStorage(this.SetPokemons,this);
+
   }
 
    async getPokemonFromStorage(_callback, classThis) {

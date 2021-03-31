@@ -4,6 +4,7 @@ import {Pokemon} from '../../models/pokemon';
 import {ActivatedRoute} from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { PokemonStorage } from 'src/app/models/pokemon-storage';
+import { Router } from '@angular/router';
 
 const { Storage } = Plugins;
 
@@ -19,7 +20,7 @@ export class PokemonCaughtDetailsPage implements OnInit {
   pokemon: PokemonStorage ;
 
   constructor(private route: ActivatedRoute,
-    private pokemonService: PokemonService) {
+    private pokemonService: PokemonService,private router: Router) {
       this.pokemon = new PokemonStorage(null,0,0,'','');
    
      }
@@ -27,6 +28,11 @@ export class PokemonCaughtDetailsPage implements OnInit {
   ngOnInit(): void {
     const id = +this.route.snapshot.paramMap.get('id');
     this.setPokemonObject(id,this.getPokemonWithid,this);
+  }
+
+  FreePokemon(){
+    Storage.remove({ key: this.pokemon.id.toString() });
+    this.router.navigate(['/home']);
   }
 
   SaveInfo(){
@@ -43,6 +49,7 @@ export class PokemonCaughtDetailsPage implements OnInit {
     });
    
   }
+  
   async setPokemonObject(key,_callback,classThis) {
     let ret = await Storage.get({ key: key});
     let json = JSON.parse(ret.value);
