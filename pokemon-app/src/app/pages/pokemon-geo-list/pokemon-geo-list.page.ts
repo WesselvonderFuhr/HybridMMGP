@@ -5,6 +5,9 @@ import { PokemonService } from '../../services/pokemon.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Router } from '@angular/router';
 
+import { Plugins } from '@capacitor/core';
+
+const { Storage } = Plugins;
 
 
 
@@ -22,9 +25,32 @@ export class PokemonGeoListPage implements OnInit {
   constructor(private pokemonService: PokemonService,private route: Router) { }
 
 
-  GoTocatchpage(id) {
-    this.route.navigate(['/pokemon/' + id]);
+  GoTocatchpage(pokemon) {
+    //this should be in the camera bit move later
+    this.AddObjectToCatchedPokemon(pokemon)
+
+    this.route.navigate(['/pokemon-caught-list']);
   }
+  //start: this should be in the camera bit move later
+  async AddObjectToCatchedPokemon(pokemon) {
+    let newId = 1;
+    const { keys } = await Storage.keys();
+    keys.forEach(item =>{
+      if((parseInt(item) >= newId)){
+        newId = parseInt(item)+1;
+      }
+    }); 
+    await Storage.set({
+      key: newId + '',
+      value: JSON.stringify({
+        pokemon_id: pokemon.id,
+        pokemon_name: pokemon.name,
+        name: '',
+        description: ''
+      })
+    });
+  }
+  //end: this should be in the camera bit move later
 
   ngOnInit() {
     
@@ -39,7 +65,12 @@ export class PokemonGeoListPage implements OnInit {
      
   }
 
-
+  SetPokemons(_callback){
+    let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+2; 
+    for (let i = 0; i < numberOfPokemons; i++) {
+      this.GeneratePokemon(_callback,numberOfPokemons);
+    }
+  }
 
   GeneratePokemon(_callback,numberOfPokemons){
     //get pokemon
@@ -51,12 +82,7 @@ export class PokemonGeoListPage implements OnInit {
     
   }
   
-  SetPokemons(_callback){
-    let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+2; 
-    for (let i = 0; i < numberOfPokemons; i++) {
-      this.GeneratePokemon(_callback,numberOfPokemons);
-    }
-  }
+
 
   SetGeoPokemon(numberOfPokemons,currentPokemon,classThis){
     if(numberOfPokemons == currentPokemon){
