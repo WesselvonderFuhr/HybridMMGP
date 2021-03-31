@@ -1,0 +1,23 @@
+import { Component, OnInit } from '@angular/core';
+import {PokemonService} from '../../services/pokemon.service';
+import {Pokemon} from '../../models/pokemon';
+import {ActivatedRoute} from '@angular/router';
+
+@Component({
+  selector: 'app-pokemon-caught-details',
+  templateUrl: './pokemon-caught-details.page.html',
+  styleUrls: ['./pokemon-caught-details.page.scss'],
+})
+export class PokemonCaughtDetailsPage implements OnInit {
+ 
+  pokemon: Pokemon;
+
+  constructor(private route: ActivatedRoute,
+    private pokemonService: PokemonService) { }
+
+  ngOnInit(): void {
+    // this.dataService.getPokemon(id).subscribe(pokemon => this.pokemon = pokemon);
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.pokemonService.getPokemon(id).subscribe(pokemon => this.pokemon = pokemon);
+  }
+}

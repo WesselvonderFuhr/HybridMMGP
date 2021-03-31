@@ -6,7 +6,29 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+ 
+  navigate : any;
+  constructor() {
+    this.sideMenu();
+  }
 
-  constructor() {}
+  sideMenu()
+  {
+    this.navigate =
+    [
+      {
+        title : "All pokemon",
+        url   : "/pokemon-list-all",
 
+      },
+      {
+        title : "Pokemons in de buurt",
+        url   : "/pokemon-geo-list",
+      },
+      {
+        title : "Gevangen Pokemons",
+        url   : "/pokemon-caught-list",
+      },
+    ]
+  }
 }

@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="flexHorizontal">
+      <ion-router-link  routerLink="/pokemon-caught-list" routerDirection="back">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-router-link> 
+      <ion-title>Pokédex</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="pokemon">
+
+  <img alt="sprite" class="center" src="{{pokemon.sprite}}"/>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Pokémon</ion-card-subtitle>
+      <ion-card-title>{{pokemon.name}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{pokemon.name}} is a {{pokemon.type}} type Pokémon. It is {{pokemon.height}} meter high and weighs {{pokemon.weight}} kilograms.
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content class="stats">
+      <span class="stat"><img alt="hp" class="icon" src="assets/images/hitpoints.png"/> {{pokemon.hp}}</span>
+      <span class="stat"><img alt="attack" class="icon" src="assets/images/attack.png"/> {{pokemon.attack}}</span>
+      <span class="stat"><img alt="defence" class="icon" src="assets/images/defence.png"/> {{pokemon.defence}}</span>
+      <span class="stat"><img alt="speed" class="icon" src="assets/images/speed.png"/> {{pokemon.speed}}</span>
+    </ion-card-content>
+  </ion-card>
+  <ion-label>yass</ion-label>
+</ion-content>

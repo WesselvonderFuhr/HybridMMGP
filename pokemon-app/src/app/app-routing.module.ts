@@ -23,6 +23,15 @@ const routes: Routes = [
     path: 'pokemon-geo-list',
     loadChildren: () => import('./pages/pokemon-geo-list/pokemon-geo-list.module').then( m => m.PokemonGeoListPageModule)
   },
+  {
+    path: 'pokemon-caught-details/:id',
+    loadChildren: () => import('./pages/pokemon-caught-details/pokemon-caught-details.module').then( m => m.PokemonCaughtDetailsPageModule)
+  },
+  {
+    path: 'pokemon-caught-list',
+    loadChildren: () => import('./pages/pokemon-caught-list/pokemon-caught-list.module').then( m => m.PokemonCaughtListPageModule)
+  },
+
 
 ];
 

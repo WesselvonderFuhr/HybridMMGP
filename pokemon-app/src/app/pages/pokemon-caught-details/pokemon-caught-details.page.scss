@@ -1,0 +1,45 @@
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 120px;
+  }
+  
+  .icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+  }
+  
+  .stats {
+    text-align: center;
+  }
+  
+  .stat:first-child {
+    margin-right: 10px;
+    display: inline-block;
+  }
+  
+  .stat {
+     margin-left: 10px;
+     margin-right: 10px;
+     display: inline-block;
+   }
+  
+  .stat:last-child {
+    margin-left: 10px;
+    display: inline-block;
+  }
+  
+  //backicon
+  ion-router-link{
+    font-size: 25px;
+    text-decoration: none;
+    color: black;
+  }
+  .flexHorizontal{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+  }
+  
