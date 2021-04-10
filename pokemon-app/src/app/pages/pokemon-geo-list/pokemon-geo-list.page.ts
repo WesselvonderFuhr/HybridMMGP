@@ -54,8 +54,7 @@ export class PokemonGeoListPage implements OnInit {
   ngOnInit() {
     
     let geolocation = new Geolocation();
-    let options = {timeout: 10000, enableHighAccuracy: true, maximumAge: 3600};
-    geolocation.getCurrentPosition(options).then((resp) => {
+    geolocation.getCurrentPosition().then((resp) => {
       this.latitude = Math.round(resp.coords.latitude * 10000) / 10000;
       this.longitude =  Math.round(resp.coords.longitude * 10000) / 10000;
      }).catch((error) => {
