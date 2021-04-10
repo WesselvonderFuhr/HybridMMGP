@@ -22,7 +22,7 @@ export class PokemonGeoListPage implements OnInit {
   latitude = 0;
   longitude = 0;
   GeoPokemons : PokemonGeotagged[] = new Array();
-  constructor(private pokemonService: PokemonService,private route: Router) { }
+  constructor(private pokemonService: PokemonService,private route: Router,private geolocation: Geolocation) { }
 
 
   GoTocatchpage(pokemon) {
@@ -52,15 +52,15 @@ export class PokemonGeoListPage implements OnInit {
   //end: this should be in the camera bit move later
 
   ngOnInit() {
-    
-    let geolocation = new Geolocation();
-    geolocation.getCurrentPosition().then((resp) => {
+
+    this.geolocation.getCurrentPosition().then((resp) => {
       this.latitude = Math.round(resp.coords.latitude * 10000) / 10000;
       this.longitude =  Math.round(resp.coords.longitude * 10000) / 10000;
+      this.SetPokemons(this.SetGeoPokemon);
      }).catch((error) => {
        console.log('Error getting location', error);
      });
-     this.SetPokemons(this.SetGeoPokemon);
+     
      
   }
 

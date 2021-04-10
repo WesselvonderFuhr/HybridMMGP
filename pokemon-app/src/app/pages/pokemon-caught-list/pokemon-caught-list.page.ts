@@ -18,7 +18,6 @@ export class PokemonCaughtListPage implements OnInit {
 
    ngOnInit() {
     this.getPokemonFromStorage(this.SetPokemons,this);
-
   }
 
    async getPokemonFromStorage(_callback, classThis) {

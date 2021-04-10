@@ -62,6 +62,7 @@ export class PokemonCaughtDetailsPage implements OnInit {
     this.description = this.pokemon.description;
     _callback(json.pokemon_id,classThis)
   }
+  
   getPokemonWithid(id,classThis){
     classThis.pokemonService.getPokemon(id).subscribe(pokemon => classThis.pokemon.pokemon = pokemon);
   }
