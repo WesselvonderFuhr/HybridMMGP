@@ -35,7 +35,6 @@ export class PokemonCaughtListPage implements OnInit {
     let json = JSON.parse(ret.value);
     
     pokemon.push(new PokemonStorage(null,json.pokemon_id,parseInt(key),json.name,json.description));
-    console.log(pokemon);
     _callback(pokemon,classThis)
   }
 

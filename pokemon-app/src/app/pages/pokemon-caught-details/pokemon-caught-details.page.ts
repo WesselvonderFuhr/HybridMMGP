@@ -25,9 +25,24 @@ export class PokemonCaughtDetailsPage implements OnInit {
    
      }
     
-  ngOnInit(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+  ngOnInit() {
+    let id = this.route.snapshot.paramMap.get('id');
     this.setPokemonObject(id,this.getPokemonWithid,this);
+  }
+  
+  async setPokemonObject(key,_callback,classThis) {
+    let ret = await Storage.get({ key: key});
+    let json = JSON.parse(ret.value);
+  this.pokemon.id = parseInt(key);
+   this.pokemon.name = json.name;
+    this.pokemon.description = json.description;
+    this.pokemon.pokemon_id = json.pokemon_id;
+    this.name = this.pokemon.name;
+    this.description = this.pokemon.description;
+    _callback(json.pokemon_id,classThis)
+  }
+  getPokemonWithid(id,classThis){
+    classThis.pokemonService.getPokemon(id).subscribe(pokemon => classThis.pokemon.pokemon = pokemon);
   }
 
   FreePokemon(){
@@ -47,27 +62,7 @@ export class PokemonCaughtDetailsPage implements OnInit {
         description: this.pokemon.description
       })
     });
-   
   }
-  
-  async setPokemonObject(key,_callback,classThis) {
-    let ret = await Storage.get({ key: key});
-    let json = JSON.parse(ret.value);
-    console.log(json);
-    this.pokemon.id = parseInt(key);
-    this.pokemon.name = json.name;
-    this.pokemon.description = json.description;
-    this.pokemon.pokemon_id = json.pokemon_id;
-    this.name = this.pokemon.name;
-    this.description = this.pokemon.description;
-    _callback(json.pokemon_id,classThis)
-  }
-  
-  getPokemonWithid(id,classThis){
-    classThis.pokemonService.getPokemon(id).subscribe(pokemon => classThis.pokemon.pokemon = pokemon);
-  }
-
-
 
   //storage
   async clear() {

@@ -10,7 +10,6 @@
 </ion-header>
 
 <ion-content *ngIf="pokemon.pokemon">
-  <ion-label>yass</ion-label>
   <img alt="sprite" class="center" src="{{pokemon.pokemon.sprite}}"/>
   <ion-card>
     <ion-card-header>
@@ -49,11 +48,10 @@
     </ion-card-content>
   </ion-card> 
 
-  <ion-button class="button" (click)="SaveInfo()">
+  <ion-fab-button slot="fixed" class="button" (click)="SaveInfo()">
     Save
-  </ion-button>
-  <ion-button class="button" (click)="FreePokemon()">
+  </ion-fab-button>
+  <ion-fab-button slot="fixed" class="button" (click)="FreePokemon()">
     Set free
-  </ion-button>
-
+  </ion-fab-button>
 </ion-content>
