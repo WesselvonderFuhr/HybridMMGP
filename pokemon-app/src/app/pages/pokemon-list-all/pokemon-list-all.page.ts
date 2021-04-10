@@ -9,13 +9,12 @@ import {Pokemon} from '../../models/pokemon';
 })
 export class PokemonListAllPage implements OnInit {
 
-  pokemons : Pokemon[] = new Array();
+  pokemons: Pokemon[] = [];
   constructor(private pokemonService: PokemonService) { }
 
   ngOnInit() {
     this.pokemonService.getPokemons().subscribe((response: any) => {
       this.SetPokemons(response);
-     
     });
   }
 

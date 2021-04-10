@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PokemonGeotagged} from '../../models/pokemon-geotagged';
 import {Pokemon} from '../../models/pokemon';
-import { PokemonService } from '../../services/pokemon.service';
-import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Router } from '@angular/router';
-
-import { Plugins } from '@capacitor/core';
+import {PokemonService} from '../../services/pokemon.service';
+import {Geolocation} from '@ionic-native/geolocation/ngx';
+import {Router} from '@angular/router';
+import {CameraResultType, CameraSource, Plugins} from '@capacitor/core';
 
 const { Storage } = Plugins;
+const { Camera } = Plugins;
 
 
 
@@ -17,7 +17,7 @@ const { Storage } = Plugins;
   styleUrls: ['./pokemon-geo-list.page.scss'],
 })
 export class PokemonGeoListPage implements OnInit {
-    
+
   pokemons : Pokemon[] = new Array();
   latitude = 0;
   longitude = 0;
@@ -25,10 +25,17 @@ export class PokemonGeoListPage implements OnInit {
   constructor(private pokemonService: PokemonService,private route: Router,private geolocation: Geolocation) { }
 
 
-  GoTocatchpage(pokemon) {
+  async GoTocatchpage(pokemon) {
     //this should be in the camera bit move later
-    this.AddObjectToCatchedPokemon(pokemon)
-    this.route.navigate(['/pokemon-caught-list']);
+    const profilePicture = await Camera.getPhoto({
+      quality: 25,
+      source: CameraSource.Camera,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+    });
+    console.log(profilePicture.base64String);
+    //this.AddObjectToCatchedPokemon(pokemon);
+    //this.route.navigate(['/pokemon-caught-list']);
   }
   //start: this should be in the camera bit move later
   async AddObjectToCatchedPokemon(pokemon) {
@@ -36,9 +43,9 @@ export class PokemonGeoListPage implements OnInit {
     const { keys } = await Storage.keys();
     keys.forEach(item =>{
       if((parseInt(item) >= newId)){
-        newId = parseInt(item)+1;
+        newId = parseInt(item) + 1;
       }
-    }); 
+    });
     await Storage.set({
       key: newId + '',
       value: JSON.stringify({
@@ -60,12 +67,12 @@ export class PokemonGeoListPage implements OnInit {
      }).catch((error) => {
        console.log('Error getting location', error);
      });
-     
-     
+
+
   }
 
   SetPokemons(_callback){
-    let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+10; 
+    let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+10;
     for (let i = 0; i < numberOfPokemons; i++) {
       this.GeneratePokemon(_callback,numberOfPokemons);
     }
@@ -73,14 +80,14 @@ export class PokemonGeoListPage implements OnInit {
 
   GeneratePokemon(_callback,numberOfPokemons){
     //get pokemon
-    let randomPokemonID = Math.floor(Math.random() * Math.floor(151))+1; 
+    let randomPokemonID = Math.floor(Math.random() * Math.floor(151))+1;
     this.pokemonService.getPokemon(randomPokemonID).subscribe(pokemon =>{
       this.pokemons.push(pokemon);
       _callback(numberOfPokemons,this.pokemons.length,this);
     } );
-    
+
   }
-  
+
 
 
   SetGeoPokemon(numberOfPokemons,currentPokemon,classThis){
@@ -97,8 +104,8 @@ export class PokemonGeoListPage implements OnInit {
   }
 
   GenerateLatlong(value){
-    let negativeOperator = Math.floor(Math.random() * Math.floor(2)); 
-    
+    let negativeOperator = Math.floor(Math.random() * Math.floor(2));
+
     value = value + Math.random() * 0.0001;
     if(negativeOperator){
       value * -1;
