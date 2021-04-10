@@ -65,7 +65,7 @@ export class PokemonGeoListPage implements OnInit {
   }
 
   SetPokemons(_callback){
-    let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+2; 
+    let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+10; 
     for (let i = 0; i < numberOfPokemons; i++) {
       this.GeneratePokemon(_callback,numberOfPokemons);
     }
