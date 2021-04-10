@@ -47,11 +47,17 @@
       <ion-textarea type="text"  [(ngModel)]="description" text-right id="input" placeholder="Enter a description here..."></ion-textarea>
     </ion-card-content>
   </ion-card> 
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed" >
+      <ion-fab-button class="button" (click)="SaveInfo()">
+        Save
+      </ion-fab-button>
+    </ion-fab>
+    
+    <ion-button class="button" (click)="FreePokemon()">
+      Set free
+    </ion-button>
 
-  <ion-fab-button slot="fixed" class="button" (click)="SaveInfo()">
-    Save
-  </ion-fab-button>
-  <ion-fab-button slot="fixed" class="button" (click)="FreePokemon()">
-    Set free
-  </ion-fab-button>
+     
+    
+
 </ion-content>

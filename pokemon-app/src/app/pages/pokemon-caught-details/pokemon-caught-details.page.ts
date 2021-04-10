@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { PokemonStorage } from 'src/app/models/pokemon-storage';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 
 const { Storage } = Plugins;
 
@@ -20,7 +21,7 @@ export class PokemonCaughtDetailsPage implements OnInit {
   pokemon: PokemonStorage ;
 
   constructor(private route: ActivatedRoute,
-    private pokemonService: PokemonService,private router: Router) {
+    private pokemonService: PokemonService,private router: Router,public toastController: ToastController) {
       this.pokemon = new PokemonStorage(null,0,0,'','');
    
      }
@@ -50,7 +51,7 @@ export class PokemonCaughtDetailsPage implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  SaveInfo(){
+  async SaveInfo(){
     this.pokemon.name = this.name;
     this.pokemon.description = this.description;
     Storage.set({
@@ -62,6 +63,11 @@ export class PokemonCaughtDetailsPage implements OnInit {
         description: this.pokemon.description
       })
     });
+    const toast = await this.toastController.create({
+      message: 'Your settings have been saved.',
+      duration: 2000
+    });
+    toast.present(); 
   }
 
   //storage
