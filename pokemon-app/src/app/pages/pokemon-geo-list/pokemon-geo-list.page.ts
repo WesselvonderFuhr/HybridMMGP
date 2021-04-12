@@ -23,6 +23,7 @@ export class PokemonGeoListPage implements OnInit {
   latitude = 0;
   longitude = 0;
   GeoPokemons : PokemonGeotagged[] = new Array();
+  pokemonsAreLoaded = false;
   constructor(private pokemonService: PokemonService,private route: Router,private geolocation: Geolocation,public toastController: ToastController) { }
 
 
@@ -105,7 +106,9 @@ export class PokemonGeoListPage implements OnInit {
       classThis.GeoPokemons[0].longitude = classThis.longitude;
       classThis.GeoPokemons[0].latitude = classThis.latitude;
       classThis.SetPokemonCantCatch();
+      classThis.pokemonsAreLoaded = true;
     }
+  
   }
 
   GenerateLatlong(value){
@@ -137,10 +140,12 @@ export class PokemonGeoListPage implements OnInit {
   
   async doRefresh(event) {
     setTimeout(() => {
-      console.log("reload");
+     
       this.GeoPokemons = new Array();
+      this.pokemons = new Array();
       this.SetPokemons(this.SetGeoPokemon).then(x =>{
         event.target.complete();
+     
       });
     }, 1000);
   }
