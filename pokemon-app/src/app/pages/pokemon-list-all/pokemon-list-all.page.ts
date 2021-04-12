@@ -19,7 +19,6 @@ export class PokemonListAllPage implements OnInit {
   }
 
   SetPokemons(pokemonList){
-    console.log(pokemonList);
     pokemonList.forEach(element => {
       this.pokemonService.getPokemon(element.id).subscribe(pokemon => this.pokemons.push(pokemon));
     });

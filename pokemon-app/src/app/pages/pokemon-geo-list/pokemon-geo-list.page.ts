@@ -5,6 +5,7 @@ import {PokemonService} from '../../services/pokemon.service';
 import {Geolocation} from '@ionic-native/geolocation/ngx';
 import {Router} from '@angular/router';
 import {CameraResultType, CameraSource, Plugins} from '@capacitor/core';
+import { ToastController } from '@ionic/angular';
 
 const { Storage } = Plugins;
 const { Camera } = Plugins;
@@ -22,7 +23,7 @@ export class PokemonGeoListPage implements OnInit {
   latitude = 0;
   longitude = 0;
   GeoPokemons : PokemonGeotagged[] = new Array();
-  constructor(private pokemonService: PokemonService,private route: Router,private geolocation: Geolocation) { }
+  constructor(private pokemonService: PokemonService,private route: Router,private geolocation: Geolocation,public toastController: ToastController) { }
 
 
   async GoTocatchpage(pokemon) {
@@ -33,7 +34,6 @@ export class PokemonGeoListPage implements OnInit {
       allowEditing: false,
       resultType: CameraResultType.Base64,
     });
-    console.log(profilePicture.base64String);
     //this.AddObjectToCatchedPokemon(pokemon);
     //this.route.navigate(['/pokemon-caught-list']);
   }
@@ -59,19 +59,26 @@ export class PokemonGeoListPage implements OnInit {
   //end: this should be in the camera bit move later
 
   ngOnInit() {
-
-    this.geolocation.getCurrentPosition().then((resp) => {
+    let options = {timeout: 10000};
+    this.geolocation.getCurrentPosition(options).then((resp) => {
       this.latitude = Math.round(resp.coords.latitude * 10000) / 10000;
       this.longitude =  Math.round(resp.coords.longitude * 10000) / 10000;
       this.SetPokemons(this.SetGeoPokemon);
      }).catch((error) => {
        console.log('Error getting location', error);
+       const toast = this.toastController.create({
+        message: 'We could not find your location, your location has been set to default',
+        duration: 4000
+      }).then(toast =>{
+        toast.present(); 
+      })
+      this.latitude = 51.6885;
+      this.longitude =  5.2874;
+      this.SetPokemons(this.SetGeoPokemon);
      });
-
-
   }
 
-  SetPokemons(_callback){
+  async SetPokemons(_callback){
     let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+10;
     for (let i = 0; i < numberOfPokemons; i++) {
       this.GeneratePokemon(_callback,numberOfPokemons);
@@ -89,7 +96,6 @@ export class PokemonGeoListPage implements OnInit {
   }
 
 
-
   SetGeoPokemon(numberOfPokemons,currentPokemon,classThis){
     if(numberOfPokemons == currentPokemon){
       classThis.pokemons.forEach(element => {
@@ -99,7 +105,6 @@ export class PokemonGeoListPage implements OnInit {
       classThis.GeoPokemons[0].longitude = classThis.longitude;
       classThis.GeoPokemons[0].latitude = classThis.latitude;
       classThis.SetPokemonCantCatch();
-      console.log(classThis.GeoPokemons);
     }
   }
 
@@ -128,5 +133,18 @@ export class PokemonGeoListPage implements OnInit {
       }
     });
   }
+
+  
+  async doRefresh(event) {
+    setTimeout(() => {
+      console.log("reload");
+      this.GeoPokemons = new Array();
+      this.SetPokemons(this.SetGeoPokemon).then(x =>{
+        event.target.complete();
+      });
+    }, 1000);
+  }
+
+
 
 }
