@@ -21,20 +21,20 @@ export class PokemonCaughtListPage implements OnInit {
   }
 
    async getPokemonFromStorage(_callback, classThis) {
-    
+
     let {keys} = await Storage.keys();
     keys.forEach(item =>{
-      
+
       this.getItemWithKey(item,_callback,classThis);
-    });   
+    });
   }
 
   async getItemWithKey(key, _callback,classThis){
     let pokemon = new Array();
     let ret =  await Storage.get({ key: key });
     let json = JSON.parse(ret.value);
-    
-    pokemon.push(new PokemonStorage(null,json.pokemon_id,parseInt(key),json.name,json.description));
+
+    pokemon.push(new PokemonStorage(null,json.pokemon_id,parseInt(key),json.name,json.description, json.locationPhotoBase64));
     _callback(pokemon,classThis)
   }
 

@@ -16,10 +16,10 @@
             <ion-label>{{item.pokemon.name}}</ion-label>
             <ion-label>Position: {{item.latitude}} | {{item.longitude}}</ion-label>
             <ion-label>{{item.cantCatch}}</ion-label>
-            <ion-button (click)="GoTocatchpage(item.pokemon)" disabled={{item.cantCatch}}> CATCH!</ion-button>
+            <ion-button (click)="CatchPokemon(item.pokemon)" disabled={{item.cantCatch}}> CATCH!</ion-button>
           </div>
-      
-        </div> 
+
+        </div>
     </ion-item>
   </ion-list>
 </ion-content>
