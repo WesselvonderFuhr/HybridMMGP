@@ -5,6 +5,7 @@ export class PokemonStorage {
       public pokemon_id: number,
       public id: number,
       public name: String,
-      public description: String
+      public description: String,
+      public locationPhotoBase64: String
     ) {}
   }

@@ -21,28 +21,29 @@ export class PokemonCaughtDetailsPage implements OnInit {
   pokemon: PokemonStorage ;
 
   constructor(private route: ActivatedRoute,
-    private pokemonService: PokemonService,private router: Router,public toastController: ToastController) {
-      this.pokemon = new PokemonStorage(null,0,0,'','');
-   
+              private pokemonService: PokemonService, private router: Router, public toastController: ToastController) {
+      this.pokemon = new PokemonStorage(null, 0, 0, '', '', '');
+
      }
-    
+
   ngOnInit() {
-    let id = this.route.snapshot.paramMap.get('id');
-    this.setPokemonObject(id,this.getPokemonWithid,this);
+    const id = this.route.snapshot.paramMap.get('id');
+    this.setPokemonObject(id, this.getPokemonWithid, this);
   }
-  
-  async setPokemonObject(key,_callback,classThis) {
-    let ret = await Storage.get({ key: key});
-    let json = JSON.parse(ret.value);
-  this.pokemon.id = parseInt(key);
-   this.pokemon.name = json.name;
+
+  async setPokemonObject(key, _callback, classThis) {
+    const ret = await Storage.get({ key});
+    const json = JSON.parse(ret.value);
+    this.pokemon.id = parseInt(key);
+    this.pokemon.name = json.name;
     this.pokemon.description = json.description;
     this.pokemon.pokemon_id = json.pokemon_id;
+    this.pokemon.locationPhotoBase64 = json.locationPhotoBase64;
     this.name = this.pokemon.name;
     this.description = this.pokemon.description;
-    _callback(json.pokemon_id,classThis)
+    _callback(json.pokemon_id, classThis);
   }
-  getPokemonWithid(id,classThis){
+  getPokemonWithid(id, classThis){
     classThis.pokemonService.getPokemon(id).subscribe(pokemon => classThis.pokemon.pokemon = pokemon);
   }
 
@@ -60,17 +61,18 @@ export class PokemonCaughtDetailsPage implements OnInit {
         pokemon_id:  this.pokemon.pokemon.id,
         pokemon_name:  this.pokemon.pokemon.name,
         name: this.pokemon.name,
-        description: this.pokemon.description
+        description: this.pokemon.description,
+        locationPhotoBase64: this.pokemon.locationPhotoBase64
       })
     });
     const toast = await this.toastController.create({
       message: 'Your settings have been saved.',
       duration: 2000
     });
-    toast.present(); 
+    toast.present();
   }
 
-  //storage
+  // storage
   async clear() {
     await Storage.clear();
   }

@@ -3,7 +3,7 @@
     <div class="flexHorizontal">
       <ion-router-link  routerLink="/pokemon-caught-list" routerDirection="back">
         <ion-icon name="arrow-back-outline"></ion-icon>
-      </ion-router-link> 
+      </ion-router-link>
       <ion-title>Pokédex</ion-title>
     </div>
   </ion-toolbar>
@@ -37,7 +37,7 @@
     <ion-card-content>
       <ion-input type="text" [(ngModel)]="name" text-right id="input" placeholder="Enter a name here..." ></ion-input>
   </ion-card-content>
-  </ion-card> 
+  </ion-card>
 
   <ion-card class="textarea">
     <ion-card-header>
@@ -46,18 +46,28 @@
     <ion-card-content>
       <ion-textarea type="text"  [(ngModel)]="description" text-right id="input" placeholder="Enter a description here..."></ion-textarea>
     </ion-card-content>
-  </ion-card> 
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Original location:</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img id="bg" src="{{'data:image/png;base64,' + pokemon.locationPhotoBase64}}"></ion-img>
+    </ion-card-content>
+  </ion-card>
+
     <ion-fab horizontal="end" vertical="bottom" slot="fixed" >
       <ion-fab-button class="button" (click)="SaveInfo()">
         Save
       </ion-fab-button>
     </ion-fab>
-    
+
     <ion-button class="button" (click)="FreePokemon()">
       Set free
     </ion-button>
 
-     
-    
+
+
 
 </ion-content>

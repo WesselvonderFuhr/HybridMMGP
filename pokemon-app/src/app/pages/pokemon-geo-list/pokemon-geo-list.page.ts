@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {CameraResultType, CameraSource, Plugins} from '@capacitor/core';
 import { ToastController } from '@ionic/angular';
 
+
 const { Storage } = Plugins;
 const { Camera } = Plugins;
 
@@ -26,20 +27,29 @@ export class PokemonGeoListPage implements OnInit {
   pokemonsAreLoaded = false;
   constructor(private pokemonService: PokemonService,private route: Router,private geolocation: Geolocation,public toastController: ToastController) { }
 
-
-  async GoTocatchpage(pokemon) {
-    //this should be in the camera bit move later
-    const profilePicture = await Camera.getPhoto({
-      quality: 25,
-      source: CameraSource.Camera,
-      allowEditing: false,
-      resultType: CameraResultType.Base64,
-    });
-    //this.AddObjectToCatchedPokemon(pokemon);
-    //this.route.navigate(['/pokemon-caught-list']);
+  async CatchPokemon(pokemon) {
+    try{
+      const locationPhoto = await Camera.getPhoto({
+        quality: 50,
+        source: CameraSource.Camera,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+      }).catch((e) => {
+        throw new Error(e);
+      });
+      await this.AddObjectToCatchedPokemon(pokemon, locationPhoto.base64String);
+      this.route.navigate(['/pokemon-caught-list']);
+    } catch (e){
+      const toast = await this.toastController.create({
+        message: 'The pokemon ran away!\nDoes your camera work?',
+        duration: 3000
+      });
+      toast.present();
+      return;
+    }
   }
   //start: this should be in the camera bit move later
-  async AddObjectToCatchedPokemon(pokemon) {
+  async AddObjectToCatchedPokemon(pokemon, locationPhotoBase64) {
     let newId = 1;
     const { keys } = await Storage.keys();
     keys.forEach(item =>{
@@ -53,7 +63,8 @@ export class PokemonGeoListPage implements OnInit {
         pokemon_id: pokemon.id,
         pokemon_name: pokemon.name,
         name: '',
-        description: ''
+        description: '',
+        locationPhotoBase64: locationPhotoBase64
       })
     });
   }
