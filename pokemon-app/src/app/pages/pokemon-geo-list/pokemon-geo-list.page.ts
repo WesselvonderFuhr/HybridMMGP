@@ -71,7 +71,7 @@ export class PokemonGeoListPage implements OnInit {
   //end: this should be in the camera bit move later
 
   ngOnInit() {
-    let options = {timeout: 10000};
+    let options = {timeout: 5000};
     this.geolocation.getCurrentPosition(options).then((resp) => {
       this.latitude = Math.round(resp.coords.latitude * 10000) / 10000;
       this.longitude =  Math.round(resp.coords.longitude * 10000) / 10000;
@@ -90,7 +90,7 @@ export class PokemonGeoListPage implements OnInit {
      });
   }
 
-  async SetPokemons(_callback){
+  SetPokemons(_callback){
     let numberOfPokemons = Math.floor(Math.random() * Math.floor(8))+10;
     for (let i = 0; i < numberOfPokemons; i++) {
       this.GeneratePokemon(_callback,numberOfPokemons);
@@ -154,10 +154,9 @@ export class PokemonGeoListPage implements OnInit {
      
       this.GeoPokemons = new Array();
       this.pokemons = new Array();
-      this.SetPokemons(this.SetGeoPokemon).then(x =>{
-        event.target.complete();
-     
-      });
+      this.ngOnInit();
+      event.target.complete();
+
     }, 1000);
   }
 

@@ -10,6 +10,7 @@ import {Pokemon} from '../../models/pokemon';
 export class PokemonListAllPage implements OnInit {
 
   pokemons : Pokemon[] = new Array();
+  arePokemonLoaded = false;
   constructor(private pokemonService: PokemonService) { }
 
   ngOnInit() {
@@ -20,7 +21,12 @@ export class PokemonListAllPage implements OnInit {
 
   SetPokemons(pokemonList){
     pokemonList.forEach(element => {
-      this.pokemonService.getPokemon(element.id).subscribe(pokemon => this.pokemons.push(pokemon));
+      this.pokemonService.getPokemon(element.id).subscribe(pokemon => {
+        this.pokemons[pokemon.id-1] = pokemon
+        if(this.pokemons.length == 151){
+          this.arePokemonLoaded = true;
+        }
+      });
     });
   }
 

@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content>
-<ion-list>
+<ion-list  *ngIf="arePokemonLoaded">
   <ion-item  *ngFor ="let item of pokemons" >
     <ion-router-link  routerLink="/pokemon/{{item.id}}" routerDirection="forward">
       <div class="flexHorizontal">
